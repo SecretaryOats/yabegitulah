@@ -1,68 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Analysis</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        .color-box {
-            width: 100px;
-            height: 100px;
-            display: inline-block;
-            margin-right: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Color Analysis</title>
 </head>
 <body>
-    <h1>Upload an Image for Color Analysis</h1>
-    <input type="file" id="fileInput">
-    <button onclick="uploadFile()">Upload</button>
+  <h1>Image Color Analysis</h1>
+  <form id="upload-form">
+    <label for="image-upload">Select an image:</label>
+    <input type="file" id="image-upload" accept="image/*">
+    <button type="submit">Analyze</button>
+  </form>
+  <div id="results"></div>
+  <script>
+    const form = document.getElementById('upload-form');
+    const resultsDiv = document.getElementById('results');
 
-    <div id="results" class="result"></div>
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
 
-    <script>
-        async function uploadFile() {
-            const fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length === 0) {
-                alert('Please select a file to upload.');
-                return;
-            }
+      const fileInput = document.getElementById('image-upload');
+      const file = fileInput.files[0];
 
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
+      // Call Python backend service here (explained later)
 
-            const response = await fetch('/upload', {
-                method: 'POST',
-                body: formData
-            });
+      // Update results based on the response from the backend
+      resultsDiv.innerHTML = "Processing..."; // Placeholder message
 
-            const result = await response.json();
-            displayResults(result);
-        }
-
-        function displayResults(result) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            result.forEach((classification, index) => {
-                const colorBox = document.createElement('div');
-                colorBox.className = 'color-box';
-                colorBox.style.backgroundColor = `rgb(${classification.color.join(',')})`;
-
-                const text = document.createElement('div');
-                text.innerHTML = `Color ${index + 1}: RGB(${classification.color.join(',')}), Season: ${classification.season_type}, Saturation: ${classification.saturation_level}, Temperature: ${classification.temperature}`;
-
-                resultsDiv.appendChild(colorBox);
-                resultsDiv.appendChild(text);
-            });
-        }
-    </script>
+      // Replace with actual results after receiving data from backend
+      // resultsDiv.innerHTML = "Analysis results...";
+    });
+  </script>
 </body>
 </html>
