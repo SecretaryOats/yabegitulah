@@ -3,34 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Color Analysis</title>
+  <title>Color Palette from Your Photo</title>
+  <style>
+    /* Add your desired styles here (optional) */
+  </style>
 </head>
 <body>
-  <h1>Image Color Analysis</h1>
+  <h1>Generate Color Palette from Photo</h1>
   <form id="upload-form">
-    <label for="image-upload">Select an image:</label>
+    <label for="image-upload">Select a photo:</label>
     <input type="file" id="image-upload" accept="image/*">
-    <button type="submit">Analyze</button>
+    <button type="submit">Generate Palette</button>
   </form>
-  <div id="results"></div>
-  <script>
-    const form = document.getElementById('upload-form');
-    const resultsDiv = document.getElementById('results');
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent default form submission
-
-      const fileInput = document.getElementById('image-upload');
-      const file = fileInput.files[0];
-
-      // Call Python backend service here (explained later)
-
-      // Update results based on the response from the backend
-      resultsDiv.innerHTML = "Processing..."; // Placeholder message
-
-      // Replace with actual results after receiving data from backend
-      // resultsDiv.innerHTML = "Analysis results...";
-    });
-  </script>
+  <div id="results" class="results-container">
+    <div class="image-container"></div>
+    <div id="palette-container"></div>
+  </div>
+  <p id="error-message"></p>
+  <script src="script.js"></script>
 </body>
 </html>
